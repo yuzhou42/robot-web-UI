@@ -1,3 +1,6 @@
+<!-- * Created on Wed June 05 2019 
+ * Copyright  2019 - Yu Zhou
+ * Email: yu.nico.zhou@gmail.com -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,27 +10,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="./bootstrap/bootstrap.min.css"  rel="stylesheet" >
+    <script src="./bootstrap/bootstrap.min.js"></script>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
-    <!-- <script src="./bootstrap/jquery-3.3.1.slim.min.js" ></script> -->
-    <!-- <script src="./bootstrap/popper.min.js" ></script> -->
-    <script src="./bootstrap/bootstrap.min.js"></script>
+    <!-- <script src="./bootstrap/jquery-3.3.1.slim.min.js" ></script>
+    <script src="./bootstrap/popper.min.js" ></script> -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+   
+    <!-- For waypoints selection -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" media="screen">
+		<style type="text/css" media="all">@import "imagelib/imgNotes.css";</style>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-mousewheel@3.1.13"></script>
+		<script type="text/javascript" src="imagelib/hammer.min.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/jquery-hammerjs@2.0.0"></script>
+		<script type="text/javascript" src="imagelib/imgViewer.js"></script>
+    <script type="text/javascript" src="imagelib/imgNotes.js"></script>
+    <script type="text/javascript" src="imagelib/wp_selection.js"></script>
+    
+    <!-- Ros Lib -->
+    <script src="./roslibjs/roslib.min.js"></script>
+    <script src="./roslibjs/eventemitter2.js"></script>
+    <script src="./roslibjs/ros3d.js"></script>
+  
+    <script src="webui.js"></script>
+    <script src="subscribers.js"></script>
   </head>
 
-  <script src="./roslibjs/roslib.min.js"></script>
-  <script src="./roslibjs/eventemitter2.js"></script>
-  <script src="./roslibjs/ros3d.js"></script>
-  <!-- <script src="./roslibjs/three.js"></script> -->
-  <script src="webui.js"></script>
-  <script src="subscribers.js"></script>
-
   <body class="bg-light">
-
-
+    <!-- navigation bar -->
     <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top" >
       <a class="navbar-brand" href="#">D-Drone</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +55,7 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#mission">Mission</a>
+            <a class="nav-link" href="#mission_tab">Mission</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
@@ -61,139 +76,133 @@
       </div>
     </nav>
 
-
+    <!-- start contents -->
     <div class="container-fluid">
         <h1>Place Hold</h1>
         <h1>Place Hold</h1>
 
-    <!-- <h1>UAV Status</h1> -->
-    <div class="row">
-      <div class="card  col-sm-4">
-          <h3 style="text-align: center;" class="card-header">ZED</h3>
-          <img id="zed_image" style="height: 186px; width: 100%; " src=" " alt="ZED image">
-          <h2></h2>
-      </div>
-      <div class="card  col-sm-4">
-          <h3 style="text-align: center;" class="card-header">Confidence Map</h3>
-          <img id="confi_image" style="height: 186px; width: 100%; " src=" " alt="Confidence map">
-          <h2></h2>
-      </div>
-      <div class="card border-light col-sm-4">
-        <h3 style="text-align: center;" class="card-header">Mission Control</h3>
-        <div style="text-align: center;" class="card-body">
-        <!-- <div class="row">
-          <div class="card border-light col-sm-5">
-              <p class="card-header">Fly Mode</p>
-              <div class="card-body">
-                  <div class="btn-group " data-toggle="buttons">
-                      <button type="button" id="vio" class="btn btn-outline-primary btn-sm">VIO</button>
-                      <button type="button" id="gps" class="btn btn-outline-primary btn-sm">GPS</button>
-                    </div>
-              </div>
-          </div>
-          <div class="card border-light col-sm-7">
-              <p class="card-header">Waypoints source</p>
-              <div class="card-body">
-                <div class="btn-group " data-toggle="buttons">
-                <button type="button" id="wp_file" class="btn btn-outline-primary btn-sm">File</button>
-                <button type="button" id="wp_map" class="btn btn-outline-primary btn-sm">Map</button>
-                <button type="button" id="wp_human" class="btn btn-outline-primary btn-sm">Human</button>
-                </div>
-              </div>
-          </div>
-        </div> -->
-          <p id="m_console" style="text-align: center; color:darkorange; font-weight:bold;">Start Mission</p>
-          <div class="btn-group  " data-toggle="buttons">
-            <button type="button" id="engine0" class="btn btn-outline-warning">Engine0</button>
-            <button type="button" id="takeoff" class="btn btn-outline-success">Takeoff</button> 
-          </div>
-          <p></p>
-          <div class="btn-group  " data-toggle="buttons">
-              <button type="button" id="mission" class="btn btn-outline-info">Mission</button>
-              <button type="button" id="landing" class="btn btn-outline-primary">Landing</button>  
-            </div>
-          
-        </div>  
-    </div>
-
-
-    <div class="row">
-        <div class="card  col-sm-8">
-            <h3 style="text-align: center;" class="card-header">Map</h3>
-            <!-- <img id="magp" style="height: 186px; width: 100%; " src=" " alt="MAP"> -->
-            <div id="rviz"></div>
+      <!-- images and command row -->
+      <div class="row">
+        <div class="card  col-sm-4">
+            <h3 style="text-align: center;" class="card-header">ZED</h3>
+            <img id="zed_image" style="height: 186px; width: 100%; " src=" " alt="ZED image">
             <h2></h2>
         </div>
-        <!-- <div class=" col-sm-1"  ></div> -->
-
+        <div class="card  col-sm-4">
+            <h3 style="text-align: center;" class="card-header">Confidence Map</h3>
+            <img id="confi_image" style="height: 186px; width: 100%; " src=" " alt="Confidence map">
+            <h2></h2>
+        </div>
         <div class="card border-light col-sm-4">
-          <h3 style="text-align: center;" class="card-header">UAV Status</h3>
-          <table style="text-align: left;" class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">X</th>
-                <th scope="col">Y</th>
-                <th scope="col">Z</th>
-                <th scope="col">Yaw</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr  class="table-success">
-                <th scope="row">NWU</th>
-                <td id="x">x</td>
-                <td id="y">y</td>
-                <td id="z">z</td>
-                <td id="yaw">yaw</td>
-              </tr>
-              <tr>
-                <th scope="row">ZED</th>
-                <td id="x_zed">x</td>
-                <td id="y_zed">y</td>
-                <td id="z_zed">z</td>
-                <td id="yaw_zed">yaw</td>
-              </tr>
-              <tr class="table-warning">
-                <th scope="row">G</th>
-                <td id="x_g">x</td>
-                <td id="y_g">y</td>
-                <td id="z_g">z</td>
-                <td id="yaw_g">yaw</td>
-              </tr>
-              
-            </tbody>
-          </table> 
+          <h3 style="text-align: center;" class="card-header">Mission Control</h3>
+          <div style="text-align: center;" class="card-body">
+          <!-- <div class="row">
+            <div class="card border-light col-sm-5">
+                <p class="card-header">Fly Mode</p>
+                <div class="card-body">
+                    <div class="btn-group " data-toggle="buttons">
+                        <button type="button" id="vio" class="btn btn-outline-primary btn-sm">VIO</button>
+                        <button type="button" id="gps" class="btn btn-outline-primary btn-sm">GPS</button>
+                      </div>
+                </div>
+            </div>
+            <div class="card border-light col-sm-7">
+                <p class="card-header">Waypoints source</p>
+                <div class="card-body">
+                  <div class="btn-group " data-toggle="buttons">
+                  <button type="button" id="wp_file" class="btn btn-outline-primary btn-sm">File</button>
+                  <button type="button" id="wp_map" class="btn btn-outline-primary btn-sm">Map</button>
+                  <button type="button" id="wp_human" class="btn btn-outline-primary btn-sm">Human</button>
+                  </div>
+                </div>
+            </div>
+          </div> -->
+            <p id="m_console" style="text-align: center; color:darkorange; font-weight:bold;">Start Mission</p>
+            <div class="btn-group  " data-toggle="buttons">
+              <button type="button" id="engine0" class="btn btn-outline-warning">Engine0</button>
+              <button type="button" id="takeoff" class="btn btn-outline-success">Takeoff</button> 
+            </div>
+            <p></p>
+            <div class="btn-group  " data-toggle="buttons">
+                <button type="button" id="mission" class="btn btn-outline-info">Mission</button>
+                <button type="button" id="landing" class="btn btn-outline-primary">Landing</button>  
+            </div>     
+          </div>  
         </div>
-    </div>
+      </div>
 
-
-
-
-
-    <!-- mission tab -->
-    <div id="mission">
-      <p></p>
-        <!-- map -->
+      <!-- rviz and uav status row -->
       <div class="row">
-        <div class=" col-md-9">
-            <img src="bishan.jpeg" id="bishan_map" class="img-responsive" style="width:100%" alt="Image">
+          <div class="card  col-sm-8">
+              <h3 style="text-align: center;" class="card-header">Map</h3>
+              <div style="min-height: 350px;" id="rviz"></div>
+              <h2></h2>
+          </div>
+          <div class="card border-light col-sm-4">
+            <h3 style="text-align: center;" class="card-header">UAV Status</h3>
+            <table style="text-align: left;" class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">X</th>
+                  <th scope="col">Y</th>
+                  <th scope="col">Z</th>
+                  <th scope="col">Yaw</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  class="table-success">
+                  <th scope="row">NWU</th>
+                  <td id="x">x</td>
+                  <td id="y">y</td>
+                  <td id="z">z</td>
+                  <td id="yaw">yaw</td>
+                </tr>
+                <tr>
+                  <th scope="row">ZED</th>
+                  <td id="x_zed">x</td>
+                  <td id="y_zed">y</td>
+                  <td id="z_zed">z</td>
+                  <td id="yaw_zed">yaw</td>
+                </tr>
+                <tr class="table-warning">
+                  <th scope="row">G</th>
+                  <td id="x_g">x</td>
+                  <td id="y_g">y</td>
+                  <td id="z_g">z</td>
+                  <td id="yaw_g">yaw</td>
+                </tr>
+                
+              </tbody>
+            </table> 
+          </div>
+      </div>
+
+      <!-- mission tab -->
+      <div class="row" id="mission_tab">
+        <div class=" col-md-8">
+            <img src="imagelib/images/bishan.jpg" id="image" class="img-responsive" style="width:100%" alt="Image">
         </div>
-        <div class="col-md-3"></div>
-    </div>
-    </div>
-    </div>
-
       
-    <!-- </div> -->
-        
+        <!-- mission selection area -->
+        <div class="col-md-4" style="padding:50px 10px 0px 0px">
+          <div class="card border-light ">
+            <h3 style="text-align: center;" class="card-header">Waypoints Selection</h3>
+            <div class="card-body" style="text-align: center;">
+              <button id="toggleEdit" type="button" class="btn btn-outline-warning"> Add  </button>
+              <button id="clear" type="button" class="btn btn-outline-danger">Clear</button>
+              <button id="export" type="button" class="btn btn-outline-info">Export</button>
+              <p></p>
+              <button id="wp_send" type="button" class="btn btn-success">Send</button>
+              <p></p>
+              <div style="text-align: center;" id="waypoints"></div>
+            </div>
+        </div>
 
-    
-    
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+        </div>
+      <!-- end row 3 -->
+      </div> 
+    <!-- end content flow -->
+    </div>     
   </body>
 </html>

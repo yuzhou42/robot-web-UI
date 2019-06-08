@@ -1,3 +1,8 @@
+/*
+ * Created on Wed June 05 2019 
+ * Copyright  2019 - Yu Zhou
+ * Email: yu.nico.zhou@gmail.com
+ */
 var twist;
 var cmdVel;
 var robot_IP;
@@ -82,7 +87,7 @@ function viewMap(){
     var viewer = new ROS3D.Viewer({
         divID : 'rviz',
         width : 820,
-        height : 400,
+        height : 350,
         // far: 300,
         cameraPose: {x: 0, y: 0, z: 15},
         cameraZoomSpeed: 2.0,
