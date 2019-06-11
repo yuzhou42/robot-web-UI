@@ -29,11 +29,12 @@ $ roslaunch tf2_web_republisher rosweb.launch
 ```
 
 
-## Tutorials 
+## Tutorials and useful websites
 1. [Bootstrap 4 + ROS](https://medium.com/husarion-blog/bootstrap-4-ros-creating-a-web-ui-for-your-robot-9a77a8e373f9)
 2. [Bootstrap 4 Tutorial](https://www.w3schools.com/bootstrap4/default.asp)
 3. [ROBOTWEBTOOLS](http://robotwebtools.org/tools.html)
 4. [Theme](https://bootswatch.com/)
+5. [HTML color code](https://www.rapidtables.com/web/color/html-color-codes.htmls)
  
 
 # MISC
@@ -53,7 +54,8 @@ $ roslaunch tf2_web_republisher rosweb.launch
 - show uav status
 - waypoints selection from the image map
 - Finished UI design
-
-## To do
 - add send funtion
 - rewrite task manager
+
+## To do
+- bug: need to clear data first and then send.

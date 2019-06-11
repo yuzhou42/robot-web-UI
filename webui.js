@@ -7,10 +7,10 @@ var twist;
 var cmdVel;
 var robot_IP;
 var ros;
-var takeoff_pub
-var engine0_srv
-var sethome_srv
+var mission_pub
 var m_console
+var points_pub
+
 
 function initVelocityPublisher() {
     // Init message with zero values.
@@ -36,50 +36,17 @@ function initVelocityPublisher() {
     cmdVel.advertise();
 }
 
-function initTakeoffPublisher() {
+function initMissionPublisher() {
     // Init message with zero values.
 
     // Init topic object
-    takeoff_pub = new ROSLIB.Topic({
+    mission_pub = new ROSLIB.Topic({
         ros : ros,
-        name : '/engage_cmd',
-        messageType : 'std_msgs/Bool'
+        name : '/mission_from_ui',
+        messageType : 'std_msgs/Byte'
     });
     // Register publisher within ROS system
-    takeoff_pub.advertise();
-}
-
-function initServices(){
-    engine0_srv = new ROSLIB.Service({
-        ros : ros,
-        name : '/mavros/engine0',
-        serviceType : 'std_srv/Trigger'
-    });
-
-    // sethome_srv = new ROSLIB.Service({
-    //     ros : ros,
-    //     name : '/mavros/cmd/set_home',
-    //     serviceType : 'mavros/CommandHome'
-    // });
-}
-
-function initTeleopKeyboard() {
-    // Use w, s, a, d keys to drive your robot
-
-    // Check if keyboard controller was aready created
-    if (teleop == null) {
-        // Initialize the teleop.
-        teleop = new KEYBOARDTELEOP.Teleop({
-            ros: ros,
-            topic: '/cmd_vel'
-        });
-    }
-
-    // Add event listener for slider moves
-    robotSpeedRange = document.getElementById("robot-speed");
-    robotSpeedRange.oninput = function () {
-        teleop.scale = robotSpeedRange.value / 100
-    }
+    mission_pub.advertise();
 }
 
 function viewMap(){
@@ -187,8 +154,8 @@ window.onload = function () {
     ros = new ROSLIB.Ros({
         url: "ws://" + robot_IP + ":9090"
     });
-
     server_status = document.getElementById("roslibjs-status");
+
     ros.on('connection', function() {
         server_status.innerHTML = "Connected";
         server_status.style.color = "limegreen";
@@ -203,55 +170,85 @@ window.onload = function () {
         server_status.innerHTML = "Socket Closed";
         server_status.style.color = "crimson";
     });
-    
-    
-    // initVelocityPublisher();
-    // get handle for video placeholder
-    // video = document.getElementById('video');
-    // // Populate video source 
-    // video.src = "http://" + robot_IP + ":8080/stream?topic=/camera/rgb/image_raw&type=mjpeg&quality=80";
-    // video.onload = function () {
-    //     // joystick and keyboard controls will be available only when video is correctly loaded
-    //     createJoystick();
-    //     initTeleopKeyboard();
-    // };
-    // document.getElementById("engine0").onclick = function(){
-    //     reset_driver_service.callService(request_stop_imu,function(result){});
-    // }
+
+    // var Polygon_pub = new ROSLIB.Topic({
+    //     ros : ros,
+    //     name : "/points_from_ui",
+    //     messageType : 'geometry_msgs/Polygon'
+    // });
+    // alert(Polygon_pub);
+
     subscribeUAVPoseInfo();
     subscribeZEDPoseInfo();
     subscribeGlobalPoseInfo();
     viewMap();
     viewImage();
-    initTakeoffPublisher();
-    initServices();
+    initMissionPublisher();
+    
+
     m_console = document.getElementById("m_console");
 
     document.getElementById("engine0").onclick = function(){
-        var trigger_engine0 = new ROSLIB.ServiceRequest({});
-        engine0_srv.callService(trigger_engine0,function(result){
-            if(result.success)
-                m_console.innerHTML = "Engine0 is activated!";
-            else
-                m_console.innerHTML = "Failed to activate engine0";
-
-            // var para = document.createElement("p");
-            // para.textContent = result.success.toString() + ', ' + result.message;
-            // var myConsoleRecord = document.getElementById("console-record");
-            // myConsoleRecord.insertBefore(para, myConsoleRecord.childNodes[0] );
-        });
+        m_console.innerHTML = "Clear previous UAV status!";
+        var msg = new ROSLIB.Message({data : 0});
+        mission_pub.publish(msg);
     }
 
     document.getElementById("takeoff").onclick = function(){
         m_console.innerHTML = "Taking off!";
-        var msg = new ROSLIB.Message({data : true});
-        takeoff_pub.publish(msg);
+        var msg = new ROSLIB.Message({data : 1});
+        mission_pub.publish(msg);
+    }
+
+    document.getElementById("mission").onclick = function(){
+        m_console.innerHTML = "Start mission";
+        var msg = new ROSLIB.Message({data : 2});
+        mission_pub.publish(msg);
     }
 
     document.getElementById("landing").onclick = function(){
-        m_console.innerHTML = "To Do";
-
+        m_console.innerHTML = "Landing";
+        var msg = new ROSLIB.Message({data : 3});
+        mission_pub.publish(msg);
     }
 
-
+    // Document.getElementById("wp_send").onclick = function(){
+    //     // var points_pub = new ROSLIB.Topic({
+    //     //     ros : ros,
+    //     //     name : '/points_from_ui',
+    //     //     messageType : 'geometry_msgs/Polygon'
+    //     // });
+    //     // // points_pub.advertise();
+    //     // var msg = new ROSLIB.Message({data : 3});
+    //     // points_pub.publish(msg);
+    
+    // }
 }
+
+
+// trigger a service
+// var trigger_engine0 = new ROSLIB.ServiceRequest({});
+// engine0_srv.callService(trigger_engine0,function(result){
+//     if(result.success)
+//         m_console.innerHTML = "Engine0 is activated!";
+//     else
+//         m_console.innerHTML = "Failed to activate engine0";
+//     // var para = document.createElement("p");
+//     // para.textContent = result.success.toString() + ', ' + result.message;
+//     // var myConsoleRecord = document.getElementById("console-record");
+//     // myConsoleRecord.insertBefore(para, myConsoleRecord.childNodes[0] );
+// });
+// initServices();
+// function initServices(){
+//     engine0_srv = new ROSLIB.Service({
+//         ros : ros,
+//         name : '/mavros/engine0',
+//         serviceType : 'std_srv/Trigger'
+//     });
+
+//     // sethome_srv = new ROSLIB.Service({
+//     //     ros : ros,
+//     //     name : '/mavros/cmd/set_home',
+//     //     serviceType : 'mavros/CommandHome'
+//     // });
+// }
