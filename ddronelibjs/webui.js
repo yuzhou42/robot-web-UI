@@ -102,7 +102,7 @@ function viewMap(){
         headLength: -0.5,
         shaftDiameter: 0.3,
         headDiameter:0.6,
-        color: 0xFFB6C1
+        color: 0xFFB6C1 //pink
       });
 
     var poseLocalClient = new ROS3D.PoseWithCovariance({
@@ -115,34 +115,34 @@ function viewMap(){
         headLength: -0.5,
         shaftDiameter: 0.3,
         headDiameter:0.6,
-        color: 0xFFD700
+        color: 0xFFD700 //yellow
       });
           // Add LaserScan data
-    var laserClient = new ROS3D.LaserScan({
-        ros: ros,
-        tfClient: tfClient,
-        rootObject: viewer.scene,
-        topic: '/scan',
-        max_pts: 720,
-        material : { color: 0xF4A460, size: 0.3}
-      });
+    // var laserClient = new ROS3D.LaserScan({
+    //     ros: ros,
+    //     tfClient: tfClient,
+    //     rootObject: viewer.scene,
+    //     topic: '/scan',
+    //     max_pts: 720,
+    //     material : { color: 0xF4A460, size: 0.3}
+    //   });
 
         // Add Path
-    var laserClient = new ROS3D.Path({
-        ros: ros,
-        tfClient: tfClient,
-        rootObject: viewer.scene,
-        topic: '/path',
-        color: 0xff0000
-      });
+    // var pathClient = new ROS3D.Path({
+    //     ros: ros,
+    //     tfClient: tfClient,
+    //     rootObject: viewer.scene,
+    //     topic: '/path',
+    //     color: 0xff0000
+    //   });
 }
 
 function viewImage(){
     zed_image =  document.getElementById('zed_image');
     zed_image.src = "http://" + robot_IP + ":8080/stream?topic=/zed/left/image_raw_color&type=ros_compressed";
     
-    confidence_map = document.getElementById('confi_image');
-    confidence_map.src = "http://" + robot_IP + ":8080/stream?topic=/zed/confidence/confidence_image&type=ros_compressed";
+    // confidence_map = document.getElementById('confi_image');
+    // confidence_map.src = "http://" + robot_IP + ":8080/stream?topic=/zed/confidence/confidence_image&type=ros_compressed";
 }
 window.onload = function () {
     // determine robot address automatically
@@ -194,7 +194,7 @@ window.onload = function () {
     }
 
     document.getElementById("mission").onclick = function(){
-        m_console.innerHTML = "Start mission";
+        // m_console.innerHTML = "Start mission";
         var msg = new ROSLIB.Message({data : 2});
         mission_pub.publish(msg);
     }
