@@ -92,14 +92,14 @@ function viewMap(){
         compression: '',
         material: { size: 0.3, color: 0x87CEEB }
     });
-    var poseGlobalClient = new ROS3D.Odometry({
+    var poseGlobalClient = new ROS3D.PoseWithCovariance({
         ros: ros,
         topic: '/ekf_fusion/pose',
         rootObject: viewer.scene,
         tfClient: tfClient,
         keep: 3,
-        length: -1,
-        headLength: -0.5,
+        length: 1,
+        headLength: 0.5,
         shaftDiameter: 0.3,
         headDiameter:0.6,
         color: 0xFFB6C1 //pink
@@ -111,8 +111,8 @@ function viewMap(){
         rootObject: viewer.scene,
         tfClient: tfClient,
         keep: 3,
-        length: -1,
-        headLength: -0.5,
+        length: 1,
+        headLength: 0.5,
         shaftDiameter: 0.3,
         headDiameter:0.6,
         color: 0xFFD700 //yellow
