@@ -171,20 +171,13 @@ window.onload = function () {
         server_status.style.color = "crimson";
     });
 
-    // var Polygon_pub = new ROSLIB.Topic({
-    //     ros : ros,
-    //     name : "/points_from_ui",
-    //     messageType : 'geometry_msgs/Polygon'
-    // });
-    // alert(Polygon_pub);
-
     subscribeUAVPoseInfo();
-    subscribeZEDPoseInfo();
-    subscribeGlobalPoseInfo();
+    subscribeRosout();
+    // subscribeZEDPoseInfo();
+    // subscribeGlobalPoseInfo();
     viewMap();
     viewImage();
     initMissionPublisher();
-    
 
     m_console = document.getElementById("m_console");
 

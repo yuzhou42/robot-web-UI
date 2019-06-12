@@ -59,3 +59,4 @@ $ roslaunch tf2_web_republisher rosweb.launch
 
 ## To do
 - bug: need to clear data first and then send.
+- add log console
