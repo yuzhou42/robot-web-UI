@@ -83,37 +83,37 @@ function subscribeUAVPoseInfo(){
     });
 
     listener.subscribe(function(msg){
-        document.getElementById("x").innerHTML = msg.pose.position.x.toFixed(2);
-        document.getElementById("y").innerHTML = msg.pose.position.y.toFixed(2);
-        document.getElementById("z").innerHTML = msg.pose.position.z.toFixed(2);
-        z_global = msg.pose.position.z.toFixed(2);
+        // document.getElementById("x").innerHTML = msg.pose.position.x.toFixed(2);
+        // document.getElementById("y").innerHTML = msg.pose.position.y.toFixed(2);
+        document.getElementById("z-data").innerHTML = msg.pose.position.z.toFixed(2);
+        // z_global = msg.pose.position.z.toFixed(2);
         var q = msg.pose.orientation;
         var yaw = - Math.atan2(2.0*(q.x*q.y + q.w*q.z), (q.w*q.w + q.x*q.x - q.y*q.y - q.z*q.z))/Math.PI*180;
         // var yaw = Math.asin(-2.0*(q.x*q.z - q.w*q.y))/Math.PI*180;
         // var yaw = Math.atan2(2.0*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z)/Math.PI*180;
-        document.getElementById("yaw").innerHTML = yaw.toFixed(0);
+        document.getElementById("yaw-data").innerHTML = yaw.toFixed(0);
         // atan2(2.0*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z);
     });
 }
 
-// function subscribeGlobalPoseInfo(){
-//     var listener = new ROSLIB.Topic({
-//         ros : ros,
-//         name : '/ekf_fusion/pose',
-//         messageType : 'geometry_msgs/PoseWithCovarianceStamped'
-//     });
+function subscribeGlobalPoseInfo(){
+    var listener = new ROSLIB.Topic({
+        ros : ros,
+        name : '/ekf_fusion/pose_local',
+        messageType : 'geometry_msgs/PoseWithCovarianceStamped'
+    });
 
-//     listener.subscribe(function(msg){
-//         document.getElementById("x_g").innerHTML = msg.pose.pose.position.x.toFixed(2);
-//         document.getElementById("y_g").innerHTML = msg.pose.pose.position.y.toFixed(2);
-//         document.getElementById("z_g").innerHTML = z_global;
+    listener.subscribe(function(msg){
+        document.getElementById("x-data").innerHTML = msg.pose.pose.position.x.toFixed(2);
+        document.getElementById("y-data").innerHTML = msg.pose.pose.position.y.toFixed(2);
+        // document.getElementById("z").innerHTML = z_global;
         
-//         var q = msg.pose.pose.orientation;
-//         var yaw = - Math.atan2(2.0*(q.x*q.y + q.w*q.z), (q.w*q.w + q.x*q.x - q.y*q.y - q.z*q.z))/Math.PI*180;
-//         // var yaw = Math.asin(-2.0*(q.x*q.z - q.w*q.y))/Math.PI*180;
-//         // var yaw = Math.atan2(2.0*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z)/Math.PI*180;
-//         document.getElementById("yaw_g").innerHTML = yaw.toFixed(0);
-//         // atan2(2.0*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z);
-//     });
-// }
+        // var q = msg.pose.pose.orientation;
+        // var yaw = - Math.atan2(2.0*(q.x*q.y + q.w*q.z), (q.w*q.w + q.x*q.x - q.y*q.y - q.z*q.z))/Math.PI*180;
+        // // var yaw = Math.asin(-2.0*(q.x*q.z - q.w*q.y))/Math.PI*180;
+        // // var yaw = Math.atan2(2.0*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z)/Math.PI*180;
+        // document.getElementById("yaw").innerHTML = yaw.toFixed(0);
+        // // atan2(2.0*(q.y*q.z + q.w*q.x), q.w*q.w - q.x*q.x - q.y*q.y + q.z*q.z);
+    });
+}
 

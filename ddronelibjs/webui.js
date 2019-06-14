@@ -47,6 +47,14 @@ function initMissionPublisher() {
     });
     // Register publisher within ROS system
     mission_pub.advertise();
+
+    Skip_pub = new ROSLIB.Topic({
+        ros : ros,
+        name : '/mission_skip_point',
+        messageType : 'std_msgs/Bool'
+    });
+    // Register publisher within ROS system
+    Skip_pub.advertise();
 }
 
 function viewMap(){
@@ -174,7 +182,7 @@ window.onload = function () {
     subscribeUAVPoseInfo();
     subscribeRosout();
     // subscribeZEDPoseInfo();
-    // subscribeGlobalPoseInfo();
+    subscribeGlobalPoseInfo();
     viewMap();
     viewImage();
     initMissionPublisher();
@@ -204,6 +212,12 @@ window.onload = function () {
         var msg = new ROSLIB.Message({data : 3});
         mission_pub.publish(msg);
     }
+    document.getElementById("wp_skip").onclick = function(){
+        m_console.innerHTML = "Skip the current point!";
+        var msg = new ROSLIB.Message({data : true});
+        Skip_pub.publish(msg);
+    }
+    
 
     // Document.getElementById("wp_send").onclick = function(){
     //     // var points_pub = new ROSLIB.Topic({

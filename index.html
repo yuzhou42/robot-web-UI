@@ -93,8 +93,9 @@
             <img id="zed_image" style="height: 186px; width: 100%; " src=" " alt="ZED image">
             <h2></h2>
         </div>
+      <!-- </div class="col-sm-0.5"></div> -->
         <div class="card  text-center col-sm-4"  >
-            <h3 style="text-align: center;"  class="card-header">Confidence Map</h3>
+            <h3 style="text-align: center;"  class="card-header">UAV Platform</h3>
             <img id="confi_image" style="height: 186px; width: 80%;  " src="imagelib/images/ddrone.jpg" alt="Confidence map">
             <h2></h2>
         </div>
@@ -158,10 +159,10 @@
               <tbody>
                 <tr  class="table-success">
                   <th scope="row">NWU</th>
-                  <td id="x">x</td>
-                  <td id="y">y</td>
-                  <td id="z">z</td>
-                  <td id="yaw">yaw</td>
+                  <td id="x-data">x</td>
+                  <td id="y-data">y</td>
+                  <td id="z-data">z</td>
+                  <td id="yaw-data">yaw</td>
                 </tr>
                 <!-- <tr>
                   <th scope="row">ZED</th>
@@ -202,6 +203,8 @@
               <button id="export" type="button" class="btn btn-outline-info">Export</button>
               <p></p>
               <button id="wp_send" type="button" class="btn btn-success">Send</button>
+              <p></p>
+              <button id="wp_skip" type="button" class="btn btn-primary">Skip</button>
               <p></p>
               <div style="text-align: center;" id="waypoints"></div>
             </div>
