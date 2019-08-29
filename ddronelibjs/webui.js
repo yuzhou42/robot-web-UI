@@ -160,7 +160,7 @@ window.onload = function () {
     document.getElementById("server-ip").innerHTML = 'Server IP:' + window.location.hostname;
     // // Init handle for rosbridge_websocket
     ros = new ROSLIB.Ros({
-        url: "ws://" + robot_IP + ":9090"
+        url: "ws://" + robot_IP + ":9999"
     });
     server_status = document.getElementById("roslibjs-status");
 
